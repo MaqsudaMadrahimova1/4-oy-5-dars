@@ -18,7 +18,17 @@ if(req.url === "/get_all_products" && req.method === "GET"){
 }
 /// get one
 if(req.url === "/get_one_products/" && req.method === "GET"){
-
+    if(req.url.startsWith("/get_one_products/") && req.method === "GET") {
+        const fileData = read_file("product.json");
+        const product = fileData.find(item => item.id === requID);
+        if(!product){
+            res.writeHead(404, option);
+            return res.end(JSON.stringify({ message: "topilmadi" }));
+        }
+        res.writeHead(200, option);
+        res.end(JSON.stringify(product));
+    }
+    
 }
 if(req.url === "/add_product" && req.method === "POST"){
     req.on("data",(userData) => {
@@ -52,16 +62,18 @@ if(req.url === "/update_product/" + requID && req.method === "PUT"){
             }))
         }
         fileData.forEach((item) => {
-           if(item.id === requID){
-            item.title = title ? title : item.title
-            item.none = none ? none : item.none
-            item.jncsjshd = jncsjshd ? jncsjshd : item.jncsjshd
-           } 
-        })
+            if(item.id === requID){
+                 item.title = title || item.title;
+                 item.none = none || item.none;
+                 item.jncsjshd = jncsjshd || item.jncsjshd;
+            } 
+         })
+         write_file("product.json", fileData);
+         
         res.writeHead(200,option)
         res.end(JSON.stringify({
-            message: " yaratildi"
-          }))
+        message: " yaratildi"
+      }))
     })
 }
 
