@@ -1,0 +1,15 @@
+[
+    {
+      "id": "hosp1",
+      "name": "City Hospital",
+      "address": "Tashkent",
+      "beds": 120
+    },
+    {
+      "id": "hosp2",
+      "name": "Central Hospital",
+      "address": "Samarkand",
+      "beds": 200
+    }
+  ]
+  
